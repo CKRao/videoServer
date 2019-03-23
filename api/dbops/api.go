@@ -1,6 +1,9 @@
 package dbops
 
-import "log"
+import (
+	"database/sql"
+	"log"
+)
 
 //添加用户
 func AddUserCredential(loginName string, pwd string) error {
@@ -12,16 +15,20 @@ func AddUserCredential(loginName string, pwd string) error {
 		return err
 	}
 
-	stmtIns.Exec(loginName, pwd)
-	stmtIns.Close()
+	_, err = stmtIns.Exec(loginName, pwd)
+	if err != nil {
+		return err
+	}
+
+	defer stmtIns.Close()
 
 	return nil
 }
 
 //获取用户
 func GetUserCredential(loginName string) (string, error) {
-	sql := "SELECT pwd FROM users WHERE login_name = ?"
-	stmtOut, err := dbConn.Prepare(sql)
+	get_sql := "SELECT pwd FROM users WHERE login_name = ?"
+	stmtOut, err := dbConn.Prepare(get_sql)
 
 	if err != nil {
 		log.Printf("GetUserCredential error: %s", err)
@@ -30,14 +37,18 @@ func GetUserCredential(loginName string) (string, error) {
 
 	var pwd string
 
-	stmtOut.QueryRow(loginName).Scan(&pwd)
-	stmtOut.Close()
+	err = stmtOut.QueryRow(loginName).Scan(&pwd)
+	if err != nil && err != sql.ErrNoRows {
+		return "", err
+	}
+
+	defer stmtOut.Close()
 
 	return pwd, nil
 }
 
 //删除用户
-func DeleteUser(login_name string,pwd string) error {
+func DeleteUser(login_name string, pwd string) error {
 	sql := "DELETE FROM users WHERE login_name = ? AND pwd = ?"
 	stmtDel, err := dbConn.Prepare(sql)
 
@@ -46,8 +57,12 @@ func DeleteUser(login_name string,pwd string) error {
 		return err
 	}
 
-	stmtDel.Exec(login_name,pwd)
-	stmtDel.Close()
+	_, err = stmtDel.Exec(login_name, pwd)
+	if err != nil {
+		return err
+	}
+
+	defer stmtDel.Close()
 
 	return nil
 }
