@@ -6,22 +6,22 @@ import (
 	"log"
 )
 
-var conf_path = "../config/conf.ini"
+var confPath = "../config/conf.ini"
 
 //新建UUID
 func NewUUID() (string, error) {
-	uuids, err := uuid.NewV4()
+	uuid, err := uuid.NewV4()
 
 	if err != nil {
 		return "", err
 	}
 
-	return uuids.String(), nil
+	return uuid.String(), nil
 }
 
 //获取数据库连接
 func GetDataSourceConfig(dataBase string) (map[string]string, error) {
-	cfg, err := goconfig.LoadConfigFile(conf_path)
+	cfg, err := goconfig.LoadConfigFile(confPath)
 	if err != nil {
 		return nil, err
 	}

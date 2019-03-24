@@ -1,0 +1,19 @@
+{
+  "routers": [
+    {
+      "path": "/user",
+      "method": "POST",
+      "handler": "CreateUser"
+    },
+    {
+      "path": "/user/:user_name",
+      "method": "POST",
+      "handler": "Login"
+    },
+    {
+      "path": "/routers",
+      "method": "POST",
+      "handler": "GetRouterJson"
+    }
+  ]
+}

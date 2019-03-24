@@ -8,16 +8,24 @@ import (
 //注册路由
 func RegisterHandlers() *httprouter.Router {
 	router := httprouter.New()
+	handles, err := GetRouters()
+	if err != nil {
+		panic(err)
+	}
+	for path, info := range handles {
+		if info.Method == "POST" {
+			router.POST(path, info.Handler)
+		} else {
+			router.GET(path, info.Handler)
+		}
 
-	router.POST("/user", CreateUser)
-	router.POST("/user/:user_name", Login)
-
+	}
 	return router
 }
 func main() {
 	r := RegisterHandlers()
-
 	http.ListenAndServe(":8000", r)
+
 }
 
 /*

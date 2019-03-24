@@ -14,7 +14,7 @@ var (
 )
 
 func init() {
-	var sqlDriver = "mysql"
+	sqlDriver := "mysql"
 
 	log.Printf("%s Database connection start init.", sqlDriver)
 
