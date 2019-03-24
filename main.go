@@ -5,21 +5,20 @@ import (
 	"net/http"
 )
 
-
 //注册路由
-func RegisterHandlers() *httprouter.Router{
+func RegisterHandlers() *httprouter.Router {
 	router := httprouter.New()
 
-	router.POST("/user",CreateUser)
-	router.POST("/user/:user_name",Login)
+	router.POST("/user", CreateUser)
+	router.POST("/user/:user_name", Login)
+
 	return router
 }
 func main() {
 	r := RegisterHandlers()
 
-	http.ListenAndServe(":8000",r)
+	http.ListenAndServe(":8000", r)
 }
-
 
 /*
 handler -> validation{1.request,2.user} -> business logic -> response

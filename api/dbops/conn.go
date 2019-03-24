@@ -2,17 +2,39 @@ package dbops
 
 import (
 	"database/sql"
-	_"github.com/go-sql-driver/mysql"
-	)
+	"fmt"
+	_ "github.com/go-sql-driver/mysql"
+	"log"
+	"server/api/utils"
+)
 
-var(
+var (
 	dbConn *sql.DB
-	err error
+	err    error
 )
 
 func init() {
-	dbConn,err = sql.Open("mysql","root:admin@tcp(localhost:3306)/video_server?charset=utf8")
+	var sqlDriver = "mysql"
+
+	log.Printf("%s Database connection start init.", sqlDriver)
+
+	dataSourceConfig, err := utils.GetDataSourceConfig(sqlDriver)
+
+	if err != nil {
+		log.Printf("Get DataSource Config Failed.")
+		panic(err)
+	}
+
+	//获取数据库参数
+	userName := dataSourceConfig["username"]
+	password := dataSourceConfig["password"]
+	url := dataSourceConfig["url"]
+	//拼接url
+	dataSourceName := fmt.Sprintf("%s:%s@tcp%s", userName, password, url)
+	dbConn, err = sql.Open(sqlDriver, dataSourceName)
 	if err != nil {
 		panic(err.Error())
 	}
+
+	log.Printf("Database connection success.")
 }
