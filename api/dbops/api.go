@@ -192,7 +192,7 @@ func ListComments(vid string, from, to int) ([]*defs.Comment, error) {
 	for rows.Next() {
 		var id, name, content string
 		if err := rows.Scan(&id, &name, &content); err != nil {
-			return res, err
+			break
 		}
 		c := &defs.Comment{Id: id, VideoId: vid, Author: name, Content: content}
 		res = append(res, c)
