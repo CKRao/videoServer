@@ -1,12 +1,26 @@
 package utils
 
 import (
-	"github.com/Unknwon/goconfig"
+	"encoding/json"
 	"github.com/satori/go.uuid"
+	"io/ioutil"
 	"log"
+	"strings"
 )
 
-var confPath = "../config/conf.ini"
+var fileName = "config.json"
+var relativePath = "config.json"
+
+type Config struct {
+	DataSource DataSource `json:"data_source"`
+}
+
+type DataSource struct {
+	DBName   string `json:"db_name"`
+	UserName string `json:"user_name"`
+	Password string `json:"password"`
+	Url      string `json:"url"`
+}
 
 //新建UUID
 func NewUUID() (string, error) {
@@ -20,19 +34,18 @@ func NewUUID() (string, error) {
 }
 
 //获取数据库连接
-func GetDataSourceConfig(dataBase string) (map[string]string, error) {
-	cfg, err := goconfig.LoadConfigFile(confPath)
+func GetDataSourceConfig(dataBase string) (*DataSource, error) {
+	data, _ := ioutil.ReadFile(relativePath)
+	cfg := &Config{}
+	err := json.Unmarshal(data, cfg)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
-	//获取配置文件信息
-	section, err := cfg.GetSection(dataBase)
-	if err != nil {
-		return nil, err
-	}
-	for k, v := range section {
-		log.Printf("key : %s    val : %s ", k, v)
-	}
-	return section, nil
 
+	if !strings.EqualFold(dataBase, cfg.DataSource.DBName) {
+		log.Fatal("ERROR DB")
+		panic("ERROR DB")
+	}
+
+	return &cfg.DataSource, nil
 }

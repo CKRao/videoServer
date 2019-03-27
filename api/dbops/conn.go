@@ -26,9 +26,9 @@ func init() {
 	}
 
 	//获取数据库参数
-	userName := dataSourceConfig["username"]
-	password := dataSourceConfig["password"]
-	url := dataSourceConfig["url"]
+	userName := dataSourceConfig.UserName
+	password := dataSourceConfig.Password
+	url := dataSourceConfig.Url
 	//拼接url
 	dataSourceName := fmt.Sprintf("%s:%s@tcp%s", userName, password, url)
 	dbConn, err = sql.Open(sqlDriver, dataSourceName)

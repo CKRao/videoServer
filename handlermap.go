@@ -24,7 +24,7 @@ type RouterInfo struct {
 
 var (
 	HandlerMap = make(map[string]httprouter.Handle)
-	router     = "./api/config/routers.json"
+	router     = "routers.json"
 )
 
 func init() {
