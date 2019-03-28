@@ -4,5 +4,6 @@
     "user_name": "root",
     "password":"admin",
     "url": "(localhost:3306)/video_server?charset=utf8"
-  }
+  },
+  "server_port": "8000"
 }

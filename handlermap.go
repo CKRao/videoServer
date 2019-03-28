@@ -30,7 +30,6 @@ var (
 func init() {
 	HandlerMap["CreateUser"] = CreateUser
 	HandlerMap["Login"] = Login
-	HandlerMap["GetRouterJson"] = GetRouterJson
 }
 
 //获取路由信息

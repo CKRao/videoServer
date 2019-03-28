@@ -6,14 +6,9 @@
       "handler": "CreateUser"
     },
     {
-      "path": "/user/:user_name",
+      "path": "/login",
       "method": "POST",
       "handler": "Login"
-    },
-    {
-      "path": "/routers",
-      "method": "POST",
-      "handler": "GetRouterJson"
     }
   ]
 }

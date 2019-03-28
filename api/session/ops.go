@@ -16,6 +16,10 @@ func init() {
 	sessionMap = &sync.Map{}
 }
 
+func GetSessionMap() *sync.Map {
+	return sessionMap
+}
+
 //加载Session
 func LoadSessionFromDB() {
 	r, err := dbops.RetrieveAllSessions()

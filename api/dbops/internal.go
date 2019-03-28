@@ -111,3 +111,22 @@ func DeleteSession(sid string) error {
 
 	return nil
 }
+
+func RetriveSessionByLoginName(loginName string) (string, error) {
+	selectSql := "SELECT session_id FROM sessions WHERE login_name = ?"
+	stmtOut, err := dbConn.Prepare(selectSql)
+	if err != nil {
+		log.Fatal("RetriveSession err ：", err)
+		return "", err
+	}
+	var sid string
+	err = stmtOut.QueryRow(loginName).Scan(&sid)
+
+	if err != nil || err == sql.ErrNoRows {
+		log.Fatal("RetriveSession err ：", err)
+		return "", err
+	}
+	defer stmtOut.Close()
+
+	return sid, nil
+}

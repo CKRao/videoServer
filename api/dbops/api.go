@@ -41,7 +41,7 @@ func GetUserCredential(loginName string) (string, error) {
 	var pwd string
 
 	err = stmtOut.QueryRow(loginName).Scan(&pwd)
-	if err != nil && err != sql.ErrNoRows {
+	if err != nil || err == sql.ErrNoRows {
 		return "", err
 	}
 

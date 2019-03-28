@@ -4,6 +4,8 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"log"
 	"net/http"
+	"server/api/session"
+	"server/api/utils"
 )
 
 const (
@@ -24,6 +26,7 @@ func NewMiddleWareHandler(r *httprouter.Router) http.Handler {
 }
 
 func (m middleWareHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	session.LoadSessionFromDB()
 	//check session
 	validateUserSession(r)
 	m.r.ServeHTTP(w, r)
@@ -37,6 +40,9 @@ func RegisterHandlers() *httprouter.Router {
 		panic(err)
 	}
 	for path, info := range handles {
+		if info.Handler == nil {
+			continue
+		}
 		switch info.Method {
 		case GET:
 			router.GET(path, info.Handler)
@@ -55,7 +61,12 @@ func RegisterHandlers() *httprouter.Router {
 func main() {
 	r := RegisterHandlers()
 	mh := NewMiddleWareHandler(r)
-	http.ListenAndServe(":8000", mh)
+	port, err := utils.GetSeverPort()
+	if err != nil {
+		port = ":8080"
+		log.Printf("从配置文件获取ServerPort失败，设置默认端口号为8080")
+	}
+	http.ListenAndServe(port, mh)
 
 }
 

@@ -33,4 +33,19 @@ var (
 		Error:     "Internal server failed",
 		ErrorCode: "004",
 	}}
+
+	ErrorParamsNullError = ErrorResponse{HttpSC: 401, Error: Err{
+		Error:     "Params is Null. Please Check The Params.",
+		ErrorCode: "005",
+	}}
+
+	ErrorUserNotFoundError = ErrorResponse{HttpSC: 401, Error: Err{
+		Error:     "User Not Found",
+		ErrorCode: "006",
+	}}
+
+	ErrorPasswordWrongError = ErrorResponse{HttpSC: 401, Error: Err{
+		Error:     "Password is Wrong",
+		ErrorCode: "007",
+	}}
 )
