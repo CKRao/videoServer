@@ -5,7 +5,7 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
-	"server/api/utils"
+	"server/scheduler/utils"
 )
 
 var (
