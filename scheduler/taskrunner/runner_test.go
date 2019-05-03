@@ -8,7 +8,6 @@ import (
 
 func TestRunner(t *testing.T) {
 	d := func(dc dataChan) error {
-		log.Printf("Start Dispatcher")
 		for i := 0; i < 30; i++ {
 			dc <- i
 			log.Printf("Dispatcher sent: %v", i)
@@ -17,7 +16,6 @@ func TestRunner(t *testing.T) {
 	}
 
 	e := func(dc dataChan) error {
-		log.Printf("Start Executor")
 	forloop:
 		for {
 			select {
