@@ -9,7 +9,7 @@ import (
 )
 
 var fileName = "config.json"
-var relativePath = "C:/Users/clarkrao/go/src/server/scheduler/config.json"
+var relativePath = "config.json"
 
 type Config struct {
 	ServerPort string     `json:"server_port"`

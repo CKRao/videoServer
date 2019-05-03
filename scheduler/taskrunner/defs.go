@@ -4,7 +4,7 @@ const (
 	READY_TO_DISPATCH = "d"
 	READY_TO_EXECUTE  = "e"
 	CLOSE             = "c"
-	VIDEO_PATH        = "C:/Users/clarkrao/go/src/videos/"
+	VIDEO_PATH        = "./videos/"
 )
 
 type controllerChan chan string
