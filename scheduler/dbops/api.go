@@ -6,13 +6,13 @@ func AddVideoDeletionRecord(vid string) error {
 	insql := "INSERT INTO video_del_server (video_id) VALUES (?)"
 	stmt, err := dbConn.Prepare(insql)
 	if err != nil {
-		log.Printf("AddVideoDeletionRecord error : ", err)
+		log.Printf("AddVideoDeletionRecord error : %s", err)
 		return err
 	}
 
 	_, err = stmt.Exec(vid)
 	if err != nil {
-		log.Printf("AddVideoDeletionRecord Exec error :", err)
+		log.Printf("AddVideoDeletionRecord Exec error : %s", err)
 		return err
 	}
 
